@@ -4,8 +4,8 @@ import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.firebaseauth.domain.model.Profile
 import com.example.firebaseauth.data.repositories.ProfileRepositoryImpl
+import com.example.firebaseauth.domain.model.Profile
 import com.example.firebaseauth.utils.HelperClass
 import com.example.firebaseauth.utils.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -90,7 +90,9 @@ class ProfileViewModel @Inject constructor(
             }
 
             is ProfileEvent.ChangePhoto -> {
-                uploadImg(event.uri)
+                _profileImgUri.value = event.uri
+                _change.value = 1
+                //uploadImg(event.uri)
             }
 
             is ProfileEvent.Save -> {
@@ -105,28 +107,31 @@ class ProfileViewModel @Inject constructor(
                 ) {
                     return
                 }
+                uploadImgAndUpdateProfile()
+            }
+        }
+    }
 
-                viewModelScope.launch {
-                    val profile = Profile(
-                        email = _email.value,
-                        name = _fullName.value,
-                        phoneNumber = _phoneNumber.value,
-                        linkedin = _linkedin.value,
-                        facebook = _facebook.value,
-                        about = _about.value,
-                        uri = _profileImgUri.value.toString()
-                    )
-                    when (val result = profileRepo.updateProfile(profile)) {
-                        is Result.Error -> {
-                            Log.d("Update Profile", result.exception.message.toString())
-                            helper.showToast("Try Again")
-                            _change.value = 1
-                        }
+    private fun updateProfile() {
+        viewModelScope.launch {
+            val profile = Profile(
+                email = _email.value,
+                name = _fullName.value,
+                phoneNumber = _phoneNumber.value,
+                linkedin = _linkedin.value,
+                facebook = _facebook.value,
+                about = _about.value,
+                uri = _profileImgUri.value.toString()
+            )
+            when (val result = profileRepo.updateProfile(profile)) {
+                is Result.Error -> {
+                    Log.d("Update Profile", result.exception.message.toString())
+                    helper.showToast("Try Again")
+                    _change.value = 1
+                }
 
-                        is Result.Success -> {
-                            _change.value = 0
-                        }
-                    }
+                is Result.Success -> {
+                    _change.value = 0
                 }
             }
         }
@@ -155,12 +160,10 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    private fun uploadImg(
-        uri: Uri
-    ) {
+    private fun uploadImgAndUpdateProfile() {
         viewModelScope.launch {
-            _isLoading.value = true
-            when (val result = profileRepo.uploadImage(uri)) {
+            _isLoading.value=true
+            when (val result = profileRepo.uploadImage(_profileImgUri.value!!)) {
                 is Result.Error -> {
                     Log.d("Upload Image", result.exception.message.toString())
                     _change.value = 1
@@ -170,9 +173,11 @@ class ProfileViewModel @Inject constructor(
                     _profileImgUri.value = result.result
                     _change.value = 0
                     Log.d("ImageUri", _profileImgUri.value.toString())
+                    updateProfile()
                 }
             }
-            _isLoading.value = false
+            _isLoading.value=false
         }
     }
+
 }

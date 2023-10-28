@@ -1,10 +1,11 @@
-package com.example.firebaseauth.di.modules
+package com.example.firebaseauth.di
+
 
 import android.content.Context
-import com.example.firebaseauth.domain.repositories.AuthRepository
 import com.example.firebaseauth.data.repositories.AuthRepositoryImpl
-import com.example.firebaseauth.domain.repositories.ProfileRepository
 import com.example.firebaseauth.data.repositories.ProfileRepositoryImpl
+import com.example.firebaseauth.domain.repositories.AuthRepository
+import com.example.firebaseauth.domain.repositories.ProfileRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore

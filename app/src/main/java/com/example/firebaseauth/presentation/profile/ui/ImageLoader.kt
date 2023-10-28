@@ -42,16 +42,16 @@ fun LoadImage(
         modifier = Modifier.wrapContentSize(),
         contentAlignment = Alignment.Center
     ) {
-        selectedImgUri?.let {
+        if (selectedImgUri != null) {
             GlideImage(
                 modifier = Modifier
                     .size(150.dp)
                     .clip(RoundedCornerShape(16.dp)),
                 contentScale = ContentScale.Crop,
-                model = it,
+                model = selectedImgUri,
                 contentDescription = null
             )
-        } ?: run {
+        } else {
             Image(
                 modifier = Modifier
                     .size(150.dp)
