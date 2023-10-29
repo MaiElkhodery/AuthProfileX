@@ -92,7 +92,6 @@ class ProfileViewModel @Inject constructor(
             is ProfileEvent.ChangePhoto -> {
                 _profileImgUri.value = event.uri
                 _change.value = 1
-                //uploadImg(event.uri)
             }
 
             is ProfileEvent.Save -> {
@@ -166,6 +165,7 @@ class ProfileViewModel @Inject constructor(
             when (val result = profileRepo.uploadImage(_profileImgUri.value!!)) {
                 is Result.Error -> {
                     Log.d("Upload Image", result.exception.message.toString())
+                    helper.showToast("failed to get the image try again")
                     _change.value = 1
                 }
 

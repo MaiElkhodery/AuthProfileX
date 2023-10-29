@@ -11,28 +11,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 
 @Composable
 fun ShowProgressIndicator() {
-    Dialog(
-        onDismissRequest = {
-
-        }
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        contentAlignment = Alignment.Center
     ) {
-        Box(
+        CircularProgressIndicator(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            CircularProgressIndicator(
-                modifier = Modifier
-                    .size(64.dp),
-                color = Color.Gray,
-                strokeWidth = 5.dp
-            )
-        }
+                .size(64.dp),
+            color = Color.Gray,
+            strokeWidth = 5.dp
+        )
     }
 }
 

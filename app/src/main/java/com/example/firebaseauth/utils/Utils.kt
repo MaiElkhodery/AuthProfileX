@@ -66,34 +66,9 @@ class HelperClass @Inject constructor(
                 showToast(e.message.toString())
             }
         }
-        fun handleFirestore(e: Throwable) {
-            when (e) {
+    }
 
-                is FirebaseAuthInvalidCredentialsException -> {
-                    showToast("wrong password")
-                }
-
-                is FirebaseAuthEmailException -> {
-                    showToast("wrong email")
-                }
-
-                is FirebaseAuthMissingActivityForRecaptchaException -> {
-                    showToast("this device blocked")
-                }
-
-                is FirebaseAuthUserCollisionException -> {
-                    showToast("email already in use")
-                }
-
-                is FirebaseNetworkException -> {
-                    showToast("network error")
-                }
-
-                else -> {
-                    showToast(e.message.toString())
-                }
-            }
-
-        }
+    fun handleFirestore(e: Throwable) {
+        showToast("Try Again")
     }
 }

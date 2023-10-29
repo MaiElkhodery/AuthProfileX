@@ -97,6 +97,9 @@ dependencies {
     //firebase storage
     implementation(platform("com.google.firebase:firebase-bom:32.4.1"))
     implementation("com.google.firebase:firebase-storage-ktx")
+
+    //coil
+    implementation("io.coil-kt:coil-compose:2.4.0")
 }
 kapt {
     correctErrorTypes = true
