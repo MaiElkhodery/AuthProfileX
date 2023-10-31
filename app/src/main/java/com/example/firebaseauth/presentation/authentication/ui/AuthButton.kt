@@ -21,11 +21,12 @@ import com.example.firebaseauth.R
 
 @Composable
 fun ShowAuthButton(
+    modifier: Modifier,
     text: String,
     onClick: () -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Button(

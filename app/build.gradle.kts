@@ -87,19 +87,15 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
 
     val nav_version = "2.7.3"
-
     implementation("androidx.navigation:navigation-compose:$nav_version")
-    //implementaion("io.coil-kt:coil-compose:1.4.0")
-
-    //glide
-    implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
-
     //firebase storage
     implementation(platform("com.google.firebase:firebase-bom:32.4.1"))
     implementation("com.google.firebase:firebase-storage-ktx")
-
     //coil
     implementation("io.coil-kt:coil-compose:2.4.0")
+    //permissions
+    implementation("com.google.accompanist:accompanist-permissions:0.32.0")
+
 }
 kapt {
     correctErrorTypes = true

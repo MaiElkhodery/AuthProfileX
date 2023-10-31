@@ -2,6 +2,7 @@ package com.example.firebaseauth.presentation.profile.ui
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -29,6 +30,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun ShowProfileTextField(
+    modifier: Modifier,
     label: String,
     text: StateFlow<String>,
     saveClicked: Boolean,
@@ -38,6 +40,7 @@ fun ShowProfileTextField(
     val content = text.collectAsState()
     OutlinedTextField(
         modifier = setModifier(
+            modifier = modifier,
             btnClicked = saveClicked,
             fieldEmpty = content.value.isBlank(),
             focusRequester
@@ -49,6 +52,7 @@ fun ShowProfileTextField(
         },
         label = {
             Text(
+                modifier = Modifier.wrapContentSize(),
                 text = label,
                 fontFamily = FontFamily(
                     Font(
@@ -97,16 +101,17 @@ fun ShowProfileTextField(
 }
 
 private fun setModifier(
+    modifier: Modifier,
     btnClicked: Boolean,
     fieldEmpty: Boolean,
     focusRequester: FocusRequester
 ): Modifier {
     if (btnClicked && fieldEmpty) {
-        return Modifier
+        return modifier
             .fillMaxWidth()
             .focusRequester(focusRequester)
     }
-    return Modifier
+    return modifier
         .fillMaxWidth()
 }
 

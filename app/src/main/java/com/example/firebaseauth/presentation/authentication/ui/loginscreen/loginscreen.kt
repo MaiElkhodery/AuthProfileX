@@ -40,8 +40,8 @@ fun LoginScreen(
 ) {
     val loading = viewModel.isLoading.collectAsState().value
     val isAuthenticated = viewModel.isAuthenticated.collectAsState().value
-    if (isAuthenticated){
-        navController.navigate(Screen.ProfileScreen.route){
+    if (isAuthenticated) {
+        navController.navigate(Screen.ProfileScreen.route) {
             popUpTo(Screen.LoginScreen.route) {
                 inclusive = true
             }
@@ -72,8 +72,7 @@ fun LoginScreen(
                 modifier = Modifier.padding(horizontal = 26.dp),
                 horizontalAlignment = Alignment.Start
             ) {
-                VerticalSpacer()
-                VerticalSpacer()
+                VerticalSpacer(Modifier.weight(0.5f))
                 Box(
                     modifier = Modifier
                         .weight(1f)
@@ -81,38 +80,44 @@ fun LoginScreen(
                 ) {
                     ShowAuthText(authText = stringResource(id = R.string.login))
                 }
+                VerticalSpacer(Modifier.weight(0.5f))
                 Column(
                     modifier = Modifier
-                        .weight(3f)
+                        .weight(2.5f)
                         .fillMaxWidth(),
                     verticalArrangement = Arrangement.Center
                 ) {
                     ShowTextField(
+                        modifier = Modifier.weight(1f),
                         label = stringResource(id = R.string.email),
                         text = viewModel.email
                     ) { email ->
                         viewModel.onEvent(AuthEvents.ChangeEmail(email))
                     }
-                    VerticalSpacer()
+                    VerticalSpacer(Modifier.weight(0.5f))
                     ShowPasswordTextField(
+                        modifier = Modifier.weight(1f),
                         text = viewModel.password
                     ) { password ->
                         viewModel.onEvent(AuthEvents.ChangePassword(password))
                     }
+                    VerticalSpacer(Modifier.weight(0.5f))
                 }
-                VerticalSpacer()
-                VerticalSpacer()
                 Column(
                     modifier = Modifier
-                        .weight(3f)
+                        .weight(2f)
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    ShowAuthButton(text = stringResource(id = R.string.login)) {
+                    ShowAuthButton(
+                        modifier = Modifier.weight(1f),
+                        text = stringResource(id = R.string.login)
+                    ) {
                         viewModel.login()
                     }
-                    VerticalSpacer()
+                    VerticalSpacer(Modifier.weight(0.3f))
                     ShowAuthBottomText(
+                        modifier = Modifier.weight(1f),
                         text1 = stringResource(id = R.string.create_account),
                         text2 = stringResource(id = R.string.signup)
                     ) {
@@ -122,8 +127,8 @@ fun LoginScreen(
                             }
                         }
                     }
+                    VerticalSpacer(Modifier.weight(0.5f))
                 }
-                VerticalSpacer()
             }
         }
 

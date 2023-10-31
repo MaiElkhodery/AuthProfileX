@@ -161,7 +161,7 @@ class ProfileViewModel @Inject constructor(
 
     private fun uploadImgAndUpdateProfile() {
         viewModelScope.launch {
-            _isLoading.value=true
+            _isLoading.value = true
             when (val result = profileRepo.uploadImage(_profileImgUri.value!!)) {
                 is Result.Error -> {
                     Log.d("Upload Image", result.exception.message.toString())
@@ -176,7 +176,56 @@ class ProfileViewModel @Inject constructor(
                     updateProfile()
                 }
             }
-            _isLoading.value=false
+            _isLoading.value = false
+        }
+    }
+
+    fun downloadImgAndGeneratePdf() {
+        if (
+            _fullName.value.isBlank() ||
+            _email.value.isBlank() ||
+            _phoneNumber.value.isBlank() ||
+            _about.value.isBlank() ||
+            _facebook.value.isBlank() ||
+            _linkedin.value.isBlank() ||
+            _profileImgUri.value.toString().isBlank()
+        ) {
+            helper.showToast("Complete Info")
+            return
+        }
+
+        viewModelScope.launch {
+            _isLoading.value = true
+            when (val result = profileRepo.downloadImage()) {
+                is Result.Error -> {
+                    Log.d("download Image", result.exception.message.toString())
+                    helper.showToast("failed to load the image try again")
+                }
+
+                is Result.Success -> {
+                    Log.d("download Image", "done")
+                    helper.generatePDF(
+                        Profile(
+                            email = _email.value,
+                            name = _fullName.value,
+                            phoneNumber = _phoneNumber.value,
+                            linkedin = _linkedin.value,
+                            facebook = _facebook.value,
+                            about = _about.value,
+                            uri = _profileImgUri.value.toString()
+                        ),
+                        result.result
+                    )
+                }
+            }
+            _isLoading.value = false
+
+        }
+    }
+
+    fun toast(msg: String) {
+        viewModelScope.launch {
+            helper.showToast(msg)
         }
     }
 

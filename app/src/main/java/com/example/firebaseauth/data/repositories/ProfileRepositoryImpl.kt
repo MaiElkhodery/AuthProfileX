@@ -1,24 +1,30 @@
 package com.example.firebaseauth.data.repositories
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Log
-import com.example.firebaseauth.domain.repositories.ProfileRepository
 import com.example.firebaseauth.domain.model.Profile
+import com.example.firebaseauth.domain.repositories.ProfileRepository
 import com.example.firebaseauth.utils.Result
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
+import java.io.File
 import javax.inject.Inject
 
 class ProfileRepositoryImpl @Inject constructor(
     firestore: FirebaseFirestore,
     private val firebaseAuth: FirebaseAuth,
-    private val storage: FirebaseStorage
+    storage: FirebaseStorage
 ) : ProfileRepository {
 
     override val profilesRef: CollectionReference = firestore.collection("profiles")
+
+    private val imageRef =
+        storage.reference.child("images/${firebaseAuth.currentUser?.uid}/profileImg.jpg")
 
     override suspend fun createProfile(
         username: String,
@@ -63,8 +69,6 @@ class ProfileRepositoryImpl @Inject constructor(
         uri: Uri
     ): Result<Uri> {
         return try {
-            val imageRef =
-                storage.reference.child("images/${firebaseAuth.currentUser?.uid}/profileImg.jpg")
             imageRef.putFile(uri).await()
             val downloadUrl = imageRef.downloadUrl.await()
             Log.d("RepoUri", downloadUrl.toString())
@@ -73,6 +77,18 @@ class ProfileRepositoryImpl @Inject constructor(
             Result.Error(e)
         }
     }
+
+    override suspend fun downloadImage(): Result<Bitmap> {
+        return try {
+            val filePath = File.createTempFile("profileImg", "bmp")
+            imageRef.getFile(filePath).await()
+            val bitmap = BitmapFactory.decodeFile(filePath.absolutePath)
+            Result.Success(bitmap)
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
+
 
     override suspend fun updateProfile(
         profile: Profile

@@ -6,7 +6,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -34,7 +33,7 @@ fun LoadImage(
 ) {
     val selectedImgUri = uri.collectAsState().value
     val launcher =
-        rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) {uri: Uri? ->
+        rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let {
                 onChange(uri)
             }
@@ -44,11 +43,12 @@ fun LoadImage(
         contentAlignment = Alignment.Center
     ) {
 
-        if (selectedImgUri != null) {
+        if (selectedImgUri.toString().isNotBlank()) {
             SubcomposeAsyncImage(
                 modifier = Modifier
                     .size(150.dp)
-                    .clip(RoundedCornerShape(16.dp)),
+                    .clip(RoundedCornerShape(16.dp))
+                    .wrapContentSize(),
                 model = selectedImgUri,
                 contentDescription = null,
                 contentScale = ContentScale.Crop
@@ -59,7 +59,7 @@ fun LoadImage(
                 } else {
                     SubcomposeAsyncImageContent()
                 }
-                if (state is AsyncImagePainter.State.Success){
+                if (state is AsyncImagePainter.State.Success) {
 
                 }
             }
@@ -67,7 +67,8 @@ fun LoadImage(
             Image(
                 modifier = Modifier
                     .size(150.dp)
-                    .clip(RoundedCornerShape(16.dp)),
+                    .clip(RoundedCornerShape(16.dp))
+                    .wrapContentSize(),
                 contentScale = ContentScale.Crop,
                 painter = painterResource(id = R.drawable.profile),
                 contentDescription = null

@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.navigation.compose.rememberNavController
 import com.example.firebaseauth.presentation.navigation.NavHost
 import com.example.firebaseauth.ui.theme.FirebaseAuthTheme
-import com.google.firebase.FirebaseApp
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,5 +23,4 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
 }

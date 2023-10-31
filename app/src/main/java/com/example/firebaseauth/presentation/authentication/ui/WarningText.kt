@@ -13,9 +13,12 @@ import androidx.compose.ui.unit.sp
 import com.example.firebaseauth.R
 
 @Composable
-fun ShowWarningText(text: String) {
+fun ShowWarningText(
+    modifier: Modifier,
+    text: String
+) {
     Text(
-        modifier = Modifier
+        modifier = modifier
             .padding(3.dp)
             .wrapContentSize(),
         text = text,

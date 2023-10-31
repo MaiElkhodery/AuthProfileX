@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun ShowTextField(
+    modifier: Modifier,
     label: String,
     text: StateFlow<String>,
     onChangeValue: (String) -> Unit
@@ -38,7 +39,7 @@ fun ShowTextField(
 
     val content = text.collectAsState()
     OutlinedTextField(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth(),
         maxLines = 1,
         value = content.value,
@@ -69,6 +70,7 @@ fun ShowTextField(
 
 @Composable
 fun ShowPasswordTextField(
+    modifier: Modifier,
     text: StateFlow<String>,
     onChangeValue: (String) -> Unit
 ) {
@@ -76,7 +78,7 @@ fun ShowPasswordTextField(
     var passwordVisible by remember { mutableStateOf(false) }
     val content = text.collectAsState()
     OutlinedTextField(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth(),
         maxLines = 1,
         value = content.value,
@@ -109,10 +111,7 @@ fun ShowPasswordTextField(
                 Icons.Filled.Visibility
             else Icons.Filled.VisibilityOff
 
-            // Localized description for accessibility services
             val description = if (passwordVisible) "Hide password" else "Show password"
-
-            // Toggle button to hide or display password
             IconButton(onClick = { passwordVisible = !passwordVisible }) {
                 Icon(imageVector = image, description)
             }

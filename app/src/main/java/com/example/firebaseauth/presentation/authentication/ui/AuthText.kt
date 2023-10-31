@@ -11,10 +11,12 @@ import androidx.compose.ui.unit.sp
 import com.example.firebaseauth.R
 
 @Composable
-fun ShowAuthText(authText: String) {
+fun ShowAuthText(
+    authText: String
+) {
     Text(
         text = authText,
-        fontSize = 26.sp,
+        fontSize = 25.sp,
         fontFamily = FontFamily(
             Font(
                 R.font.poppins_medium

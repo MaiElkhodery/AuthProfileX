@@ -18,12 +18,13 @@ import com.example.firebaseauth.R
 
 @Composable
 fun ShowAuthBottomText(
+    modifier: Modifier,
     text1: String,
     text2: String,
     onClickText : ()->Unit
     ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Center
     ) {
         Text(
