@@ -88,7 +88,7 @@ class HelperClass @Inject constructor(
         val paint = Paint()
 
         val scaleBitmap = Bitmap.createScaledBitmap(bitmap, 170, 170, false)
-        canvas.drawBitmap(scaleBitmap, 40f, 100f, paint)
+        canvas.drawBitmap(scaleBitmap, 40f, 95f, paint)
 
         textStyle.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
         textStyle.color = Color.Black.toArgb()
