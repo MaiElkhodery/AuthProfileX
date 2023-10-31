@@ -81,7 +81,7 @@ class HelperClass @Inject constructor(
         profile: Profile, bitmap: Bitmap
     ) {
         val document = PdfDocument()
-        val pageMetaData = PdfDocument.PageInfo.Builder(792, 1000, 1).create()
+        val pageMetaData = PdfDocument.PageInfo.Builder(1000, 1000, 1).create()
         val page = document.startPage(pageMetaData)
         val canvas = page.canvas
         val textStyle = Paint()
@@ -96,12 +96,23 @@ class HelperClass @Inject constructor(
 
         val x = 250f
         val y = 120f
-        canvas.drawText("Name: ${profile.name}", x, y, textStyle)
-        canvas.drawText("About Me: ${profile.about}", x, y + 100f, textStyle)
-        canvas.drawText("Email: ${profile.email}", x, y + 200f, textStyle)
-        canvas.drawText("Phone Number: ${profile.phoneNumber}", x, y + 300f, textStyle)
-        canvas.drawText("Linkedin: ${profile.linkedin}", x, y + 400f, textStyle)
-        canvas.drawText("Facebook: ${profile.facebook}", x, y + 500f, textStyle)
+        canvas.drawText("Name:", x, y, textStyle)
+        canvas.drawText(profile.name, x, y+50, textStyle)
+
+        canvas.drawText("About Me:", x, y + 150, textStyle)
+        canvas.drawText(profile.about, x, y + 200f, textStyle)
+
+        canvas.drawText("Email:", x, y + 300f, textStyle)
+        canvas.drawText(profile.email, x, y + 350f, textStyle)
+
+        canvas.drawText("Phone Number:", x, y + 450f, textStyle)
+        canvas.drawText(profile.phoneNumber, x, y + 500f, textStyle)
+
+        canvas.drawText("Linkedin:", x, y + 600f, textStyle)
+        canvas.drawText(profile.linkedin, x, y + 650f, textStyle)
+
+        canvas.drawText("Facebook:", x, y + 750f, textStyle)
+        canvas.drawText(profile.facebook, x, y + 800f, textStyle)
 
         document.finishPage(page)
 

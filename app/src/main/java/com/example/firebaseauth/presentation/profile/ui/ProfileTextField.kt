@@ -45,7 +45,7 @@ fun ShowProfileTextField(
             fieldEmpty = content.value.isBlank(),
             focusRequester
         ),
-        maxLines = 1,
+        maxLines = 2,
         value = content.value,
         onValueChange = {
             onChangeValue(it)
